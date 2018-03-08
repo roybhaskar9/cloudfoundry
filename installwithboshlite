@@ -1,3 +1,10 @@
+# First setup your system as per https://www.youtube.com/watch?v=_05C65ZIrQE
+# Then open cmd with run as administrator, and run console command on command prompt
+# Inside console, run these commands
+bash
+cd ~
+mkdir cloudfoundry
+cd cloudfoundry
 git clone https://github.com/cloudfoundry/bosh-lite
 cd bosh-lite
 vagrant up
