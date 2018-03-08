@@ -1,0 +1,37 @@
+git clone https://github.com/cloudfoundry/bosh-lite
+cd bosh-lite
+vagrant up
+vagrant ssh
+sudo apt-get update 
+bosh target 192.168.50.4 lite
+sudo apt-get install dos2unix
+cd /vagrant/bin
+dos2unix add-route
+dos2unix provision_cf
+./add-route
+cd ~
+bosh download public stemcell bosh-stemcell-389-warden-boshlite-ubuntu-trusty-go_agent.tgz
+bosh upload stemcell bosh-stemcell-389-warden-boshlite-ubuntu-trusty-go_agent.tgz
+sudo apt-get install git
+git clone https://github.com/cloudfoundry/cf-release
+cd cf-release
+git checkout tags/v257
+./scripts/update
+bosh upload release releases/cf-257.yml
+sudo gem install bundler
+sudo apt-get install unzip
+cd ~
+mkdir spiff
+cd spiff
+wget https://github.com/cloudfoundry-incubator/spiff/releases/download/v1.0.8/spiff_linux_amd64.zip
+unzip spiff_linux_amd64.zip
+cp spiff /usr/bin/
+cd /vagrant/bin
+sudo nano provision_cf
+# This is a manual step
+# Set the line CF_DIR="//home/vagrant/cf-release"
+sudo ./provision_cf
+cd ~/cf-release
+bosh status
+bosh deployments
+bosh cck
